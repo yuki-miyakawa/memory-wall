@@ -1,0 +1,11 @@
+services:
+  app:
+    container_name: app
+    build: .
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - .:/app
+    tty: true
+    stdin_open: true 
