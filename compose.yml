@@ -1,7 +1,35 @@
 services:
-  app:
-    container_name: app
-    build: .
+  c-dev:
+    container_name: c-dev
+    build:
+      context: .
+      target: c-dev
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - .:/app
+    tty: true
+    stdin_open: true
+
+  go-dev:
+    container_name: go-dev
+    build:
+      context: .
+      target: go-dev
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - .:/app
+    tty: true
+    stdin_open: true
+
+  rust-dev:
+    container_name: rust-dev
+    build:
+      context: .
+      target: rust-dev
     privileged: true
     cap_add:
       - SYS_ADMIN
