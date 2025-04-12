@@ -1,7 +1,17 @@
 version: '3'
 
 tasks:
-  container:
+  build:
     cmds:
-      - docker compose down
-      - docker compose up -d
+      - docker build --target rust -t rust-dev -f Dockerfile .
+      - docker build --target go -t go-dev -f Dockerfile .
+      - docker build --target c -t c-dev -f Dockerfile .
+  rust:
+    cmds:
+      - docker run --rm -it -v ${PWD}:/app -w /app rust-dev sh -c "cd rust && cargo build --release && cp target/release/rust ../bin/main_rust && rm -rf target && cd .. && chmod +x bin/main_rust && ./bin/main_rust"
+  go:
+    cmds:
+      - docker run --rm -it -v ${PWD}:/app -w /app go-dev sh -c "cd go && go build -o main_go && cp main_go ../bin/main_go && rm -rf main_go && cd .. && chmod +x bin/main_go && ./bin/main_go"
+  c:
+    cmds:
+      - docker run --rm -it -v ${PWD}:/app -w /app c-dev sh -c "cd c && gcc -o main_c main.c && cp main_c ../bin/main_c && rm -rf main_c && cd .. && chmod +x bin/main_c && ./bin/main_c"
