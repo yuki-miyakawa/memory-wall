@@ -69,7 +69,7 @@ double random_access(int size)
 int main()
 {
     // Default memory size
-    int size = 1024 * 1024 * 4;
+    int size = 1024 * 1024 * 12;
     const int iterations = 10; // Number of iterations
 
     printf("=== Sequential Access ===\n");
